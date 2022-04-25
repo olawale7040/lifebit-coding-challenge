@@ -12,7 +12,7 @@ const MovieDetails = () => {
   let { id } = useParams();
 
   // State
-  const movieDetails = useSelector((state) => state.movies.movieDetails);
+  const { movieDetails, error } = useSelector((state) => state.movies);
 
   useEffect(() => {
     dispatch(fetchMovieDetails(id));
@@ -51,7 +51,12 @@ const MovieDetails = () => {
           </div>
         </div>
       )}
-      {movieDetails == null && <div className="empty-box">...Loading</div>}
+      {movieDetails == null && !error && (
+        <div className="empty-box">...Loading</div>
+      )}
+      {movieDetails == null && error && (
+        <div className="empty-box">{error}</div>
+      )}
     </div>
   );
 };
